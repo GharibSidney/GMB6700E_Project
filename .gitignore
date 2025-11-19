@@ -2,6 +2,7 @@ image_calibration*
 *.jpg
 *.png
 *.jpeg
+data
 *.heic
 *.HEIC
 # Byte-compiled / optimized / DLL files
