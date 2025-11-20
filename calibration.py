@@ -2,14 +2,15 @@ import cv2
 import numpy as np
 import glob
 import os
-
+from helper.add_color import draw_charuco_colored
 # Configuration
 ARUCO_DICT = cv2.aruco.DICT_4X4_1000
 SQUARES_X = 11  # Number of squares in X direction
 SQUARES_Y = 16  # Number of squares in Y direction
 SQUARE_LENGTH = 0.021  # Total square size (21mm)
 MARKER_LENGTH = 0.015  # Marker size (15mm)
-PATH_TO_IMAGES = "./poly_calib/"
+PATH_TO_IMAGES = "./images/photo_calib/"#".images/poly_calib/"
+DISPLAY_DETECTIONS = True  # Set to True to display detected corners
 
 def calibrate_camera():
     """
@@ -105,6 +106,12 @@ def calibrate_camera():
                     all_charuco_corners.append(charuco_corners)
                     all_charuco_ids.append(charuco_ids)
                     print(f"✓ {os.path.basename(image_file)}: Detected {retval} ChArUco corners")
+                    if DISPLAY_DETECTIONS:
+                        img_colored = draw_charuco_colored(img, charuco_corners, charuco_ids, board)
+                        scale = 0.4
+                        preview = cv2.resize(img_colored, None, fx=scale, fy=scale)
+                        cv2.imshow("ChArUco Corners", preview)
+                        cv2.waitKey(0)
                 else:
                     print(f"✗ {os.path.basename(image_file)}: interpolateCornersCharuco returned {retval} corners")
             except Exception as e:
