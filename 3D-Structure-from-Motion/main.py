@@ -45,7 +45,6 @@ def distortion_coefficient_loader():
         dist_coeff = np.array(line.split(), dtype=np.float32).reshape(-1, 1) # reshape(-1, 1) does shape: (5,) → shape: (5, 1), for OpenCV compatibility
         return dist_coeff
 
-
 def downscale_image(img, scale=2):
     for _ in range(1, int(scale / 2) + 1):
         img = cv2.pyrDown(img)
@@ -253,7 +252,7 @@ def run(img_dir:str,apply_bundle_adjustment:boolean=False):
         cm_points_2 = features_2[cm_points_1]
         cm_points_cur = features_cur[cm_points_1]
 
-        rot_matrix, tran_matrix, cm_points_2, points_3d, cm_points_cur = pnp(points_3d[cm_points_0], cm_points_2, K, np.zeros((5, 1), dtype=np.float32), cm_points_cur, initial = 0)
+        rot_matrix, tran_matrix, cm_points_2, points_3d, cm_points_cur = pnp(points_3d[cm_points_0], cm_points_2, K, dist_coeff, cm_points_cur, initial = 0)
         transform_matrix_1 = np.hstack((rot_matrix, tran_matrix))
         pose_2 = np.matmul(K, transform_matrix_1)
 
