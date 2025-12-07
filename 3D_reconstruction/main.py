@@ -14,7 +14,6 @@ def image_loader(dir_path:str, scale:float=2):
         K = np.float32([i.strip().split(" ") for i in lines])
         
     img_list = [os.path.join(dir_path, i)for i in os.listdir(dir_path)]
-    print(img_list)
 
     # Downscale instrinsic parameters
     K[0, 0] /= scale
