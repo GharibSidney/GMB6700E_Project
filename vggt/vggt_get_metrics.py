@@ -1,5 +1,5 @@
 import numpy as np
-pred = np.load('input_images_20251206_223356_852312/predictions.npz')
+pred = np.load('results/artem_15/predictions.npz')
 print(pred.files)
 
 Ks = pred["intrinsic"]         # (N, 3, 3)
